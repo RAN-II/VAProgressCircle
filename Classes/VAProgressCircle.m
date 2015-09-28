@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, UIColorRGBIndex){
 @property (assign, nonatomic, getter = isFinished) BOOL finished;
 @property (nonatomic) CGFloat total;
 
+@property (weak, nonatomic) UIColor *backgroundViewsColor;
+
 @end
 
 #pragma mark - VAProgressCircle
@@ -63,6 +65,7 @@ typedef NS_ENUM(NSInteger, UIColorRGBIndex){
     
     if(self)
     {
+        self.backgroundViewsColor = self.backgroundColor;
         [self setupDefaults];
         [self setupLines];
         [self setupViews];
@@ -77,6 +80,7 @@ typedef NS_ENUM(NSInteger, UIColorRGBIndex){
     
     if(self)
     {
+        self.backgroundViewsColor = self.backgroundColor;
         [self setupDefaults];
         [self setupLines];
         [self setupViews];
@@ -87,6 +91,8 @@ typedef NS_ENUM(NSInteger, UIColorRGBIndex){
 
 - (void)setupDefaults
 {
+    self.backgroundColor = [UIColor clearColor];
+    
     self.total = 0;
     self.animationSpeed = 1.0;
     
@@ -120,7 +126,7 @@ typedef NS_ENUM(NSInteger, UIColorRGBIndex){
     self.numberView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width / 6, self.frame.size.height / 6)];
     self.numberView.layer.cornerRadius = self.numberView.frame.size.width / 2;
     self.numberView.center = CGPointMake(self.center.x - self.frame.origin.x, self.center.y - self.frame.origin.y);
-    [self.numberView setBackgroundColor:[UIColor whiteColor]];
+    [self.numberView setBackgroundColor:self.backgroundViewsColor];
     
     self.numberLabel = [[UIProgressLabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width / 6, self.frame.size.height / 6)];
     self.numberLabel.textAlignment = NSTextAlignmentCenter;
@@ -141,7 +147,7 @@ typedef NS_ENUM(NSInteger, UIColorRGBIndex){
     self.backgroundCircle.lineCap = kCALineCapRound;
     self.backgroundCircle.fillColor = [UIColor clearColor].CGColor;
     self.backgroundCircle.lineWidth = [[NSNumber numberWithInt:self.frame.size.width / 12] floatValue];
-    self.backgroundCircle.strokeColor = [UIColor whiteColor].CGColor;
+    self.backgroundCircle.strokeColor = self.backgroundViewsColor.CGColor;
     self.backgroundCircle.strokeEnd = 1.0;
     self.backgroundCircle.zPosition = -1;
     
@@ -152,6 +158,13 @@ typedef NS_ENUM(NSInteger, UIColorRGBIndex){
     self.numberViewPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.center.x - self.frame.origin.x, self.center.y - self.frame.origin.y) radius:self.frame.size.height * 0.07 startAngle:DEGREES_TO_RADIANS(270) endAngle:DEGREES_TO_RADIANS(270.01) clockwise:NO];
     
     [self.layer addSublayer:self.backgroundCircle];
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:[UIColor clearColor]];
+    self.backgroundViewsColor = backgroundColor;
+    [self setupLines];
+    [self setupViews];
 }
 
 #pragma mark - Public Methods
