@@ -97,6 +97,14 @@ typedef NS_ENUM(NSInteger, UIColorRGBIndex){
     return _numberLabel;
 }
 
+- (void)setNumberLabelColor:(UIColor *)numberLabelColor {
+    if (![_numberLabelColor isEqual:numberLabelColor]) {
+        _numberLabelColor = numberLabelColor;
+        [self setupViews];
+        [self setupLines];
+    }
+}
+
 - (void)setupDefaults
 {
     self.backgroundColor = [UIColor clearColor];
