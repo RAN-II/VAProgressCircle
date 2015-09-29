@@ -60,7 +60,7 @@
 
 - (void)setupTimer
 {
-    self.countUpTimer = [NSTimer timerWithTimeInterval:0.02 target:self selector:@selector(count) userInfo:nil repeats:YES];
+    self.countUpTimer = [NSTimer timerWithTimeInterval:0.01 target:self selector:@selector(count) userInfo:nil repeats:YES];
 }
 
 - (void)count
@@ -69,7 +69,7 @@
     
     self.text = [NSString stringWithFormat:@"%i", self.currentNumber];
     
-    if(self.currentNumber == self.countUpToNumber)
+    if(self.currentNumber >= self.countUpToNumber)
     {
         [self.countUpTimer invalidate];
         
