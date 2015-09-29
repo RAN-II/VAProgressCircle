@@ -89,6 +89,14 @@ typedef NS_ENUM(NSInteger, UIColorRGBIndex){
     return self;
 }
 
+- (UIProgressLabel *)numberLabel {
+    if (!_numberLabel) {
+        UIProgressLabel *newLabel = [[UIProgressLabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width / 6, self.frame.size.height / 6)];
+        _numberLabel = newLabel;
+    }
+    return _numberLabel;
+}
+
 - (void)setupDefaults
 {
     self.backgroundColor = [UIColor clearColor];
@@ -128,7 +136,6 @@ typedef NS_ENUM(NSInteger, UIColorRGBIndex){
     self.numberView.center = CGPointMake(self.center.x - self.frame.origin.x, self.center.y - self.frame.origin.y);
     [self.numberView setBackgroundColor:self.backgroundViewsColor];
     
-    self.numberLabel = [[UIProgressLabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width / 6, self.frame.size.height / 6)];
     self.numberLabel.textAlignment = NSTextAlignmentCenter;
     self.numberLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:self.numberView.frame.size.width / 2];
     [self.numberLabel setText:[NSString stringWithFormat:@"%i", (int)self.total]];
